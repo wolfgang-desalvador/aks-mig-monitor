@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: mig-monitor
+  name: aks-mig-monitor
   labels:
-    app: mig-monitor
+    app: aks-mig-monitor
 spec:
   selector:
     matchLabels:
-      name: mig-monitor
+      name: aks-mig-monitor
   template:
     metadata:
       labels:
-        name: mig-monitor
+        name: aks-mig-monitor
     spec:
-      serviceAccountName: mig-monitor-sa
+      serviceAccountName: aks-mig-monitor-sa
       priorityClassName: system-node-critical
       containers:
-        - name: mig-monitor
-          image: <ACR_NAME>/migmonitor
+        - name: aks-mig-monitor
+          image: <ACR_NAME>/aks-mig-monitor
           imagePullPolicy: Always
           env:
           - name: POD_NODE

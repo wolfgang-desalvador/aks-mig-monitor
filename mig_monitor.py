@@ -108,8 +108,8 @@ class MIGMonitor:
         """
         node_list = self.api_instance.list_node(field_selector='metadata.name={}'.format(self.getPodNode()))
         for node in node_list.items:
-            if self.isNodeMIGConfigured():
-                if not self.isNodeMIGSuccess():
+            if self.isNodeMIGConfigured(node):
+                if not self.isNodeMIGSuccess(node):
                     if not self.isMIGTainted(node):
                         logging.info('Applying taint.')
                         self.addTaint(node)
