@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: mig-monitor
+  labels:
+    app: mig-monitor
+spec:
+  selector:
+    matchLabels:
+      name: mig-monitor
+  template:
+    metadata:
+      labels:
+        name: mig-monitor
+    spec:
+      serviceAccountName: mig-monitor-sa
+      priorityClassName: system-node-critical
+      containers:
+        - name: mig-monitor
+          image: <ACR_NAME>/migmonitor
+          imagePullPolicy: Always
+          env:
+          - name: POD_NODE
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: TIME_SLEEP
+            value: "10"
+      tolerations:
+        - key: "sku"
+          operator: "Equal"
+          value: "gpu"
+          effect: "NoSchedule"
+        - key: "kubernetes.azure.com/scalesetpriority"
+          operator: "Equal"
+          value: "spot"
+          effect: "NoSchedule"
