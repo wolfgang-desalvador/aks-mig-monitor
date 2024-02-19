@@ -7,6 +7,6 @@ RUN mkdir -p /opt/
 RUN mkdir -p /opt/scripts
 RUN python3 -m venv /opt/mig-monitor
 RUN /opt/mig-monitor/bin/pip3 install kubernetes
-COPY mig_monitor.py /opt/
+COPY mig_monitor.py /opt/scripts/
 ENV PYTHONUNBUFFERED=1
 CMD ["/opt/mig-monitor/bin/python3","/opt/scripts/mig_monitor.py"]
